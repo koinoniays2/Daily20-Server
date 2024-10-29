@@ -1,12 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node build/app.js",
     "prestart": "npm run build",
     "build": "babel src -d build",
-    "dev": "nodemon --exec babel-node src/index.js"
+    "dev": "nodemon --exec babel-node src/app.js"
   },
   "author": "",
   "license": "ISC",

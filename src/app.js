@@ -3,7 +3,7 @@ import "./db.js"; // db 연결
 import express from "express"; // npm i express
 import morgan from "morgan"; // npm i morgan
 import cors from "cors"; // npm i cors
-import joinRouter from "./router/Joinrouter";
+import joinRouter from "./router/Joinrouter.js";
 
 const corsOption = {
     origin: "*"
