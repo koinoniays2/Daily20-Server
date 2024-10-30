@@ -42,7 +42,7 @@ export const join = async (req, res) => {
 
 export const login = async (req, res) => {
     try{
-        // console.log(req.body);
+        console.log(req.body);
         const { id, password } = req.body;
 
         const user = await User.findOne({ id });
@@ -50,7 +50,7 @@ export const login = async (req, res) => {
             return res.status(401).send({ result: false, message: "아이디 또는 비밀번호가 잘못되었습니다." });
         }
         // 입력한 비밀번호와 저장된 해시된 비밀번호 비교
-        const isMatch = bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).send({ result: false, message: "아이디 또는 비밀번호가 잘못되었습니다." });
         };
