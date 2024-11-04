@@ -14,7 +14,7 @@ export const idCheck = async (req, res) => {
         return res.status(200).json({ result: !userExists, message: userExists ? "이미 사용중인 아이디입니다." : "사용 가능한 아이디입니다." });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ result: false, message: "죄송합니다, 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
+        return res.status(500).json({ result: false, message: "죄송합니다. 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
     };
 };
 
@@ -41,7 +41,7 @@ export const join = async (req, res) => {
         return res.status(201).json({ result: true, message: "회원가입이 완료되었습니다." });
     }catch(error){
         console.log(error);
-        return res.status(500).json({ result: false, message: "죄송합니다, 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
+        return res.status(500).json({ result: false, message: "죄송합니다. 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
     };
 };
 
@@ -70,6 +70,6 @@ export const login = async (req, res) => {
         return res.status(200).send({ result: true, token, data: { id: user.id, name: user.name } });
     }catch(error){
         console.log(error);
-        return res.status(500).json({ result: false, message: "죄송합니다, 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
+        return res.status(500).json({ result: false, message: "죄송합니다. 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
     };
 };
