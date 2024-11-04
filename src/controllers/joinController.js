@@ -48,17 +48,20 @@ export const join = async (req, res) => {
 export const login = async (req, res) => {
     // console.log(req.body);
     const { id, password } = req.body;
+    if(!id || !password) {
+        return res.status(400).json({ result: false, message: "아이디와 비밀번호를 입력해주세요." });
+    };
 
     try{
         // 데이터베이스에서 사용자 찾기
         const user = await User.findOne({ id });
         if (!user) {
-            return res.status(401).send({ result: false, message: "아이디 비밀번호 오류" });
+            return res.status(401).send({ result: false, message: "아이디 또는 비밀번호를 확인해 주세요." });
         }
         // 입력한 비밀번호와 저장된 해시된 비밀번호 비교
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(401).send({ result: false, message: "아이디 비밀번호 오류" });
+            return res.status(401).send({ result: false, message: "아이디 또는 비밀번호를 확인해 주세요." });
         };
 
          // JWT 발급
@@ -67,6 +70,6 @@ export const login = async (req, res) => {
         return res.status(200).send({ result: true, token, data: { id: user.id, name: user.name } });
     }catch(error){
         console.log(error);
-        return res.status(500).json({ result: false, message: "서버 오류" });
+        return res.status(500).json({ result: false, message: "죄송합니다, 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
     };
 };
