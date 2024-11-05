@@ -1,5 +1,4 @@
 import Memo from "../model/memo";
-import jwt from "jsonwebtoken";
 
 export const memoWrite = async (req, res) => {
     const { language, mean, pronunciation, reference} = req.body;
@@ -27,7 +26,7 @@ export const memoList = async (req, res) => {
     try {
         const userId = req.user.id;
 
-        const memos = await Memo.find({ writer: userId });
+        const memos = await Memo.find({ writer: userId }).sort({ createdAt: -1 }); // 날짜 내림차순
         if (memos.length === 0) {
             return res.status(200).json({ result: false, message: "등록된 메모가 없습니다.", memos: [] });
         };
