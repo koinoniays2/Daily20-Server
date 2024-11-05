@@ -3,16 +3,9 @@ import jwt from "jsonwebtoken";
 
 export const memoWrite = async (req, res) => {
     const { language, mean, pronunciation, reference} = req.body;
-     // 요청 헤더에서 토큰 추출
-    const token = req.headers.authorization?.split(" ")[1];
-        
-    if (!token) {
-        return res.status(401).json({ result: false, message: "로그인이 필요합니다. 먼저 로그인해 주세요." });
-    };
 
-    // 토큰 검증 및 사용자 정보 추출
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;  // 토큰 페이로드에 포함된 사용자 ID
+    // 미들웨어로부터 전달된 사용자 ID
+    const userId = req.user.id; // 토큰 페이로드에 포함된 사용자 ID
 
     try {
         const data = await Memo.create({
@@ -32,14 +25,7 @@ export const memoWrite = async (req, res) => {
 
 export const memoList = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(" ")[1];
-        
-        if (!token) {
-            return res.status(401).json({ result: false, message: "로그인이 필요합니다. 먼저 로그인해 주세요." });
-        };
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decoded.id;
+        const userId = req.user.id;
 
         const memos = await Memo.find({ writer: userId });
         if (memos.length === 0) {
