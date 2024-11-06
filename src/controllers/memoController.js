@@ -54,3 +54,23 @@ export const memoDelete = async (req, res) => {
         return res.status(500).json({ result: false, message: "죄송합니다. 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
     }
 };
+
+export const memoUpdate = async (req, res) => {
+    const { _id, language, mean, pronunciation, reference } = req.body;
+
+    try {
+        const updatedMemo = await Memo.findByIdAndUpdate(
+            _id,
+            { language, mean, pronunciation, reference },
+            { new: true }
+        );
+
+        if (!updatedMemo) {
+            return res.status(404).json({ result: false, message: "메모를 찾을 수 없습니다." });
+        }
+        res.status(200).json({ result: true, message: "메모가 성공적으로 수정되었습니다.", data: updatedMemo });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ result: false, message: "죄송합니다. 서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." });
+    }
+};
